@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./atelier.css";
 
 export const metadata: Metadata = {
-  title: "Compreli — Garment repair for a circular fashion industry",
+  title: "Compreli — Repairing fashion’s future",
   description:
-    "Compreli repairs 60+ types of garment defects so rejected garments ship at export quality instead of becoming waste.",
+    "Industrial garment restoration for manufacturers and brands. Repair defects, recover value and keep fashion out of landfill.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -16,10 +17,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Figtree:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Hanken+Grotesk:wght@400;500;600&display=swap"
         />
+        {/* If scripts never run, the loader must not cover the page */}
+        <noscript>
+          <style>{`.loader{display:none!important}`}</style>
+        </noscript>
       </head>
-      <body>{children}</body>
+      <body>
+        <a className="skip" href="#main">Skip to content</a>
+        {children}
+      </body>
     </html>
   );
 }

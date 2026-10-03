@@ -64,7 +64,7 @@ const vertex = /* glsl */ `
     gl_Position = projectionMatrix * mv;
     gl_PointSize = uSize * (1.0 + st * 0.8) * uPixel / -mv.z;
     vStitch = st;
-    vAlpha = (0.45 + 0.55 * aRand) * ip;
+    vAlpha = (0.35 + 0.5 * aRand) * ip;
   }
 `;
 
@@ -104,11 +104,11 @@ function Threads({ intro }: { intro: React.RefObject<{ v: number }> }) {
       uMorph: { value: 0 },
       uTime: { value: 0 },
       uIntro: { value: 0 },
-      uSize: { value: 15 },
+      uSize: { value: 13 },
       uPixel: { value: 1 },
       uOpacity: { value: 1 },
-      uBase: { value: new THREE.Color("#b9c3ff") },
-      uThread: { value: new THREE.Color("#ffcf3a") },
+      uBase: { value: new THREE.Color("#1b1f3d") },   // indigo ink
+      uThread: { value: new THREE.Color("#3346e0") }, // denim-blue repair thread
     }),
     []
   );
@@ -193,7 +193,7 @@ function Threads({ intro }: { intro: React.RefObject<{ v: number }> }) {
           uniforms={uniforms}
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={THREE.NormalBlending}
         />
       </points>
     </group>
@@ -203,9 +203,14 @@ function Threads({ intro }: { intro: React.RefObject<{ v: number }> }) {
 export default function Scene() {
   const intro = useRef({ v: 0 });
 
+  // Threads fly in and gather into the torn cloth when the first stage scrolls into view
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    gsap.to(intro.current, { v: 1, duration: reduce ? 0 : 2.6, ease: "power3.out", delay: 0.2 });
+    const first = document.querySelector("[data-stage]");
+    const play = () => gsap.to(intro.current, { v: 1, duration: reduce ? 0 : 2.4, ease: "power3.out" });
+    if (!first) { play(); return; }
+    const st = ScrollTrigger.create({ trigger: first, start: "top 85%", once: true, onEnter: play });
+    return () => st.kill();
   }, []);
 
   return (
