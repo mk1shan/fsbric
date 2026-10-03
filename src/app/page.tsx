@@ -2,6 +2,7 @@ import Motion from "@/components/Motion";
 import Header, { WHATSAPP } from "@/components/Header";
 import { AtelierHero, RepairLab, LivingArchive } from "@/components/Atelier";
 import Photo from "@/components/Photo";
+import ScrollStory, { EditorialMotion } from "@/components/ScrollStory";
 
 const COUNTRIES = ["Sri Lanka", "Pakistan", "India", "Egypt", "Jordan", "Kenya"];
 
@@ -9,13 +10,14 @@ export default function Home() {
   return (
     <>
       <Motion />
+      <EditorialMotion />
       <Header />
       <main id="main">
         <AtelierHero />
 
         <section className="manifesto" id="about">
           <p className="eyebrow" data-rise>Our point of view</p>
-          <p className="manifesto-copy" data-rise>A garment with a flaw is still a garment worth saving. We make failed pieces invisible to inspection—and visible to the world again.</p>
+          <p className="manifesto-copy">{"A garment with a flaw is still a garment worth saving. We make failed pieces invisible to inspection—and visible to the world again.".split(" ").map((word, index) => <span className="manifesto-word" key={index}>{word}{" "}</span>)}</p>
           <div className="manifesto-note" data-rise><span>Repair over reject.</span><span>Value over waste.</span><span>Craft at industrial scale.</span></div>
         </section>
 
@@ -36,6 +38,7 @@ export default function Home() {
           </div>
         </section>
 
+        <ScrollStory />
         <RepairLab />
         <LivingArchive />
 

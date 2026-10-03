@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./atelier.css";
+import "./scroll-story.css";
 
 export const metadata: Metadata = {
   title: "Compreli — Repairing fashion’s future",
